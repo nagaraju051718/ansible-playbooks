@@ -1,0 +1,38 @@
+---
+- name: installing tomcat10 on all the servers
+  hosts: all
+  tasks: 
+    - name: installing tomcat on all the servers
+      apt:
+        name: tomcat10
+        state: present
+        update_cache: yes
+    - name: installing tomcat10-admin on all the servers
+      apt:
+        name: tomcat10-admin
+        state: present
+    - name: copying tomcat-users.xml file to all the servers
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat10/tomcat-users.xml
+    - name: replacing tomcat port number on all the servers
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/server.xml
+    - name: restarting all the servers
+      service: 
+        name: tomcat10
+        state: restarted
+    - name: pause
+      pause:
+        minutes: 3
+    - name: tomcat respond or not
+      uri:
+        url: http://172.31.1.2:9090
+        status_code: 200
+    - name: tomcat respond or not
+      uri: 
+        url: http://172.31.15.201:9090
+        status_code: 200
+...

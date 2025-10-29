@@ -1,0 +1,17 @@
+---
+- name: my file is in server 1 i want to download to controller using fetch command
+  hosts: 172.31.1.2
+  tasks:
+    - name: file 1 is downloading to controller
+      fetch:
+        src: file1
+        dest: /tmp
+- name: copying file on server 2
+  hosts: 172.31.15.201
+  tasks:
+    - name: file 1 copying on server2
+      copy:
+        src: /tmp/172.31.1.2
+        dest: /tmp
+...
+

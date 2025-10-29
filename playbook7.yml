@@ -1,0 +1,17 @@
+---
+- name: creating user and cloning git repo url on that user
+  hosts: all
+  tasks:  
+    - name: creating user
+      user:
+        name: swathi 
+        password: swathi
+        uid: 999
+        comment: " It is a normal user"
+        home: /tmp/swathi
+        shell: /bin/bash
+    - name: cloning repo url on creating user
+      git: 
+        repo: https://github.com/nagaraju051718/maven.git
+        dest: /tmp/swathi/git
+...

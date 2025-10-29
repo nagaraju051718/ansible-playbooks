@@ -1,0 +1,15 @@
+---
+- name: install sw's on all the servers
+  hosts: all
+  vars:
+    a: tomcat10
+    b: present
+    c: yes
+  tasks: 
+    - name: install tomcat on all the servers
+      apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"
+
+...

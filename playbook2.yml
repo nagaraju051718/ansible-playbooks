@@ -1,0 +1,9 @@
+---
+- name: copying password files to all the servers
+  hosts: all 
+  tasks: 
+   - name: copying password file all the servers
+     copy:
+       src: /etc/passwd/
+       dest: /tmp
+...

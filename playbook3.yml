@@ -1,0 +1,9 @@
+---
+- name: installing docker on all the servers
+  hosts: all 
+  tasks:
+    - name: installing docker on all the servers
+      shell: curl -fsSL https://get.docker.com -o install-docker.sh
+    - name: launching docker on all the servers
+      shell: sudo sh install-docker.sh
+...

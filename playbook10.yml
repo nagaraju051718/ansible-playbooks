@@ -1,0 +1,11 @@
+---
+- name: install and unistall on all the users
+  hosts: all
+  tasks:
+    - name: install and unistall on all the servers
+      apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"
+        purge: "{{d}}"
+...

@@ -1,0 +1,9 @@
+---
+- name: cloning git repository on mygit folder
+  hosts: all
+  tasks: 
+    - name: cloning git repository 
+      git: 
+        repo: https://github.com/nagaraju051718/maven.git
+        dest: /tmp/mygit
+...
