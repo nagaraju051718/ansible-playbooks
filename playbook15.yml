@@ -1,0 +1,10 @@
+---
+- name: implenting host scope variables
+  hosts: 172.31.15.201
+  tasks: 
+    - name: installing git
+      apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"
+...
