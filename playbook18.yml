@@ -1,0 +1,33 @@
+---
+- name: Creating users,copy passwd file, installing softwares, creating files 
+  hosts: all
+  tasks:
+    - name: creating user
+      user:
+        name: "{{item.a}}"
+        home: "{{item.b}}"
+        password: "{{item.c}}"
+        shell: "{{item.d}}"
+        comment: "{{item.e}}"
+      with_items:
+        - {a: ramu, b: /tmp/ramu, c: ramu, d: /bin/bash, e: "it is a normal user"}
+    - name: cpoying password file
+      copy:
+        src: "{{item.a}}"
+        dest: "{{item.b}}"
+      with_items: 
+        - {a: /etc/passwd, b: /tmp/ramu}
+    - name: installing software on all the servers
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - git
+    - name: creating files on all the servers
+      file:
+        name: "{{item}}"
+        state: touch
+      with_items:  
+        - file1
+...

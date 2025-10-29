@@ -1,0 +1,36 @@
+---
+- name: creating tomcat10 on all the servers and tomcat10-admin coping tomcat-users.xml and replacing port number on all the servers and restaring and url respond or not
+  hosts: all
+  tasks: 
+    - name: install tomcat10 and tomcat10-admin
+      apt: 
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+        - {a: tomcat10, b: present, c: yes}
+        - {a: tomcat10-admin, b: present, c: no}
+    - name: copying tomcat-users.xml
+      copy:
+        src: tomcat-users.xml  
+        dest: /etc/tomcat10/tomcat-users.xml
+    - name: replacing tomcat10 on all the servers
+      replace: 
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/server.xml
+    - name: restarting tomcat10 on all the servers
+      service: 
+        name: tomcat10 
+        state: restarted
+    - name: pausing time 2 minute
+      pause: 
+        minutes: 2
+    - name: url respond or not
+      uri:
+        url: "{{item.a}}"
+        status_code: "{{item.b}}"
+      with_items: 
+        - {a: http://172.31.1.2:9090, b: 200}
+        - {a: http://172.31.15.201:9090, b: 200}  
+...

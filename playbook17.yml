@@ -1,0 +1,14 @@
+---
+- name: installing multiple softwares on all the servers
+  hosts: all
+  tasks: 
+    - name: install all the servers
+      apt: 
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items: 
+        - {a: openjdk-17-jdk,b: present, c: yes}
+        - {a: maven, b: present,c: no}
+        - {a: tree, b: present, c: no}
+...

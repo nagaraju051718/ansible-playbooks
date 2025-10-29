@@ -1,0 +1,12 @@
+---
+- name: Implementing loops on all the servers
+  hosts: all
+  tasks: 
+    - name: install tree maven git 
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - openjdk-17-jdk    
+...
