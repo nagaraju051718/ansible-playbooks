@@ -1,0 +1,6 @@
+---
+- name: Restsrting apache2 on all the servers
+  service: 
+    name: apache2
+    state: restarted
+...

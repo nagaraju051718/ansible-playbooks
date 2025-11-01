@@ -1,0 +1,39 @@
+---
+- name: Implementing handlers 
+  hosts: all
+  tasks:
+    - name: Installing tomcat10 on all the servers
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items: 
+          - tomcat10 
+          - tomcat10-admin
+          - apache2
+      notify: responce or not
+    - name: Editing index.html file and tomcat-users.xml
+      copy: 
+        content: "welcome"
+        dest: "{{item}}"
+      with_items: 
+          - /etc/tomcat10/tomcat-users.xml
+          - /var/www/html/index.html
+      notify: restart tomcat10 and apache2
+  handlers: 
+    - name: restart tomcat10 and apache2
+      service: 
+        name: "{{item}}"
+        state: restarted
+      with_items: 
+          - tomcat10
+          - apache2 
+    - name: response or not
+      uri:
+        url: "{{item}}"
+        status_code: 200
+      with_items:
+          - http://172.31.15.201
+          - http://172.31.1.2      
+...
+

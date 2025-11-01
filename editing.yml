@@ -1,0 +1,6 @@
+---
+- name: Editing the home page of apache2
+  copy: 
+    content: "welcome to raju's home page"
+    dest: /var/www/html/index.html
+...

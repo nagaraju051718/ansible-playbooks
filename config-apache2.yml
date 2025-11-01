@@ -1,0 +1,12 @@
+---
+- name: Config apache2 on all the servers and changing the content after restsrting apache2 and responce or not 
+  hosts: all
+  tasks: 
+    - name: Implementing parent playbooks
+      include_tasks: "{{item}}"
+      with_items:
+        - install.yml
+        - editing.yml
+        - restarting.yml
+        - responce.yml
+...

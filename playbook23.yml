@@ -1,0 +1,7 @@
+---
+- name: Implementing parent playbooks
+  hosts: all
+  tasks: 
+    - name: Installing tomcat on all the servers
+      include_tasks: playbook22.yml
+...
