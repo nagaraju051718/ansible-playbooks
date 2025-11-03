@@ -1,0 +1,6 @@
+---
+- name: Restarting tomcat on all the servers
+  service: 
+    name: tomcat10
+    state: restarted
+...

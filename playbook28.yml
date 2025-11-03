@@ -1,0 +1,48 @@
+---
+- name: implementing and install java git maven jenkins
+  hosts: localhost
+  tasks:
+    - name: install java git maven jenkins
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - openjdk-17-jdk
+        - git
+        - maven
+        - jenkins
+- name: Installing tomcat10 and tomcat10-admin on all the servers
+  hosts: all
+  tasks:
+    - name: installing tomcat10 and tomcat10-admin
+      apt: 
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items: 
+        - tomcat10
+        - tomcat10-admin
+    - name: copying tomcat-users.xml file
+      copy: 
+        src: tomcat-users.xml
+        dest: /etc/tomcat10/tomcat-users.xml
+    - name: changing the tomcat10 port number
+      replace: 
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/server.xml
+    - name: Restarting tomcat on all the servers
+      service: 
+        name: tomcat10
+        state: restarted
+    - name: url response or not
+      uri: 
+        url: "{{item}}"
+        status_code: 200
+      with_items: 
+        - http://172.31.1.2
+        - http://172.31.15.201    
+...          
+
+

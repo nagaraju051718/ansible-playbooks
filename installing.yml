@@ -1,0 +1,12 @@
+---
+- name: Installing jenkins and git maven java
+  apt: 
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  with_items:
+    - openjdk-17-jdk
+    - maven
+    - git
+    - jenkins    
+...

@@ -1,0 +1,10 @@
+---
+- name: Installing tomcat10 and tomcat10-admin on qa server
+  apt: 
+    name: "{{item}}"
+    state: present
+    update_cache: yes
+  with_items:
+    - tomcat10
+    - tomcat10-admin
+...

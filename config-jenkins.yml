@@ -1,0 +1,19 @@
+---
+- name: Configuring jenkins ci-cd flow 
+  hosts: localhost
+  tasks:
+    - name: Implementing parent playbooks
+      include_tasks: "{{item}}"
+      with_items:
+        - installing.yml
+- name: Installing tomcat10 and admin on qa server and prod server
+  hosts: all
+  tasks:
+    - name: Implementing parent playbooks 
+      include_tasks: "{{item}}" 
+      with_items:
+        - installing1.yml
+        - copying.yml
+        - editing1.yml
+        - responce1.yml    
+...

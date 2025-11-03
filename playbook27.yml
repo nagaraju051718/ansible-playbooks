@@ -1,0 +1,22 @@
+---
+- name: Uninstall Java, Maven, Git, and Jenkins from Controller
+  hosts: all
+  become: yes
+  tasks:
+    - name: Uninstall Java, Maven, Git, and Jenkins
+      apt:
+        name:
+          - OpenJDK 21
+          - maven
+          - git
+          - jenkins
+        state: absent
+        purge: yes
+        autoremove: yes
+        autoclean: yes
+      register: uninstall_result
+
+    - name: Show what was removed
+      debug:
+        var: uninstall_result
+...
