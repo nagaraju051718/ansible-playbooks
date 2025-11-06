@@ -1,0 +1,62 @@
+---
+- name: Implementing ci-cd set up using jenkins and git maven 
+  hosts: 172.31.28.151
+  tasks: 
+    - name: Istalling jenkins git maven
+      apt: 
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items: 
+        - openjdk-17-jdk
+        - maven
+        - git
+    - name: Downloading jenkins.war file
+      get_url:
+        url: https://get.jenkins.io/war-stable/2.528.1/jenkins.war
+        dest: /tmp/jenkins
+
+- name: Installing tomcat on all the servers
+  hosts: servers
+  tasks: 
+    - name: Installing tomcat on all the servers
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items:
+        - tomcat10
+        - tomcat10-admin
+
+    - name: Copying tomact-users.xml file
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat10   
+      notify: Restart tomcat10
+
+    - name: Restart tomcat10
+      service: 
+        name: tomcat10
+        state: restarted
+    - name: Pausing time
+      pause:
+        seconds: 30
+
+    - name: Replacing port number
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/server.xml
+
+    - name: url response or not
+      uri:
+        url: "{{item}}"
+        status_code: 200
+      with_items:
+        - "http:172.31.21.2:9090"
+        - "http://172.31.17.30:9090"
+        - "http://172.31.28.151:9090"
+    
+         
+          
+...
