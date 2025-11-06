@@ -1,0 +1,24 @@
+---
+- name: Installing git on all servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure Python and apt are installed (for Ubuntu/Debian)
+      raw: |
+        apt-get update -y && apt-get install -y python3 python3-apt
+      when: ansible_os_family == "Debian"
+
+    - name: Installing git on Ubuntu servers
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Installing git on RedHat servers
+      yum:
+        name: git
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+

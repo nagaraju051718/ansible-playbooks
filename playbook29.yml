@@ -1,0 +1,16 @@
+---
+- name: Implementing when conditions
+  hosts: all 
+  vars: 
+    a: 10
+  tasks:
+    - name: Implementing when conditions
+      user:
+        name: manu
+        password: manu
+        uid: 1010
+        comment: "This is a super user"
+        shell: /bin/bash
+      when: a==10
+
+...

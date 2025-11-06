@@ -1,0 +1,18 @@
+---
+- name: when the file1 is present we cannot do anything 
+  hosts: all
+  tasks: 
+    - name: Capturing the file1 data
+      stat: 
+        path: /tmp/file1
+      register: a
+    - name: Displaying the output
+      debug:   
+        var: a
+    - name: Creating a directory 
+      file:
+        name: /tmp/file1
+        state: directory
+      when: a.stat.exists==false    
+
+...

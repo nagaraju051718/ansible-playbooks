@@ -1,0 +1,19 @@
+---
+- name: Installing git on all the servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: abc
+      block:
+        - name: Installing git on ubuntu servers
+          apt:
+            name: git
+            state: present
+            update_cache: yes
+      rescue:
+        - name: Installing git on redhat server
+          yum:
+            name: git
+            state: present
+            update_cache: yes
+

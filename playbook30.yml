@@ -1,0 +1,9 @@
+---
+- name: Implementing hwen conditions and condition is true otherwise doesnot
+  hosts: all
+  tasks: 
+    - name: Creating file condition is true 
+      file:
+        name: /tmp/file1
+        state: touch 
+...
