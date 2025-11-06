@@ -1,0 +1,60 @@
+---
+- name: Installing apache2 on ubuntu servers
+  hosts: all
+  tasks: 
+    - name: Installing apache2 on ubuntu servers
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Installing httpd on redHat server
+      yum:
+        name: httpd
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "RedHat"
+
+    - name: copying index.html file on all the servers
+      copy: 
+        content: "welcome"
+        dest: /var/www/html/index.html
+
+    - name: Restarting apache2 on ubuntu server
+      service: 
+        name: apache2
+        state: restarted
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Restarting httpd on RedHat server
+      service: 
+        name: httpd
+        state: restarted
+      when: ansible_distribution == "RedHat"
+
+    - name: url responce check
+      uri:
+        url: "{{item}}"
+        status_code: 200
+      with_items: 
+        - http://172.31.21.2
+        - http://172.31.17.30
+        - http://172.31.21.141    
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
