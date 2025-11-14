@@ -1,0 +1,12 @@
+---
+- name: Copying customizec tomcat-users.xml file
+  copy: 
+    src: "{{file1}}"
+    dest: "{{dest1}}"
+- name: changing the port number of tomcat
+  replace:
+    regexp: "{{port1}}"
+    replace: "{{port2}}}"
+    path: "{{path1}}"
+  notify: check url responce   
+...
